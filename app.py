@@ -4,13 +4,13 @@ from math import *
 import config
 
 import RaceTrack
+import Timer
 
 pygame.init()
 
 screen = pygame.display.set_mode((config.screenWidth, config.screenHeight))
 pygame.display.set_caption("First Game")
 clock = pygame.time.Clock()
-
 
 class RaceCar:
     def __init__(self):
@@ -166,32 +166,12 @@ class RaceCar:
         # Return two front coords
         return carRect
 
-
-class Timer:
-    def __init__(self):
-        self.x = config.screenWidth / 2
-        self.y = config.screenHeight / 2
-        self.time = 0
-
-    def draw(self):
-        font = pygame.font.Font('freesansbold.ttf', 32)
-        text = font.render("%s" % float(self.time), True, config.C_WHITE)
-        textRect = text.get_rect()
-        textRect.center = (self.x, self.y)
-        screen.blit(text, textRect)
-
-    def update(self, carState):
-        if carState > 0 and carState < 3:
-            self.time += 0.5
-        self.draw()
-
-
 # Create the car
 car = RaceCar()
 # Create the track
 track = RaceTrack.RaceTrack()
 # Create the timer
-timer = Timer()
+timer = Timer.Timer()
 
 carState = 0  # 0 - ready, 1 - driving, 2 - midway, 3 - finished
 
@@ -217,7 +197,7 @@ while run:
     carBody = car.do()
 
     # Update timer and draw it
-    timer.update(carState)
+    timer.update(carState, screen)
 
     # Check for collisions
     # Finish line collision
