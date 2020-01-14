@@ -1,5 +1,5 @@
 # Main Configs
-screenWidth = 500
+screenWidth = 1000
 screenHeight = 500
 # Colors
 C_RED = (255, 0, 0)

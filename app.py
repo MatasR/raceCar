@@ -1,18 +1,20 @@
 import pygame
 import config
 
-import RaceCar
+import RaceCarPoly
 import RaceTrack
 import Timer
 
+# Initialize game engine library
 pygame.init()
 
+# Create main game window
 screen = pygame.display.set_mode((config.screenWidth, config.screenHeight))
 pygame.display.set_caption("First Game")
 clock = pygame.time.Clock()
 
 # Create the car
-car = RaceCar.RaceCar()
+car = RaceCarPoly.RaceCar()
 # Create the track
 track = RaceTrack.RaceTrack()
 # Create the timer
@@ -20,6 +22,7 @@ timer = Timer.Timer()
 
 carState = 0  # 0 - ready, 1 - driving, 2 - midway, 3 - finished
 
+# Main game loop
 run = True
 while run:
     # FPS

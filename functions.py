@@ -1,11 +1,14 @@
-class Point2D:
-    def __init__(self):
-        self.x
-        self.y
+from math import *
 
-    def rotatePoint(self, alpha):
-        newX = (self.x * Math.cos(Math.toRadians(0 + alpha))) + (self.y * Math.cos(Math.toRadians(90 + alpha)))
-        newY = (self.x * Math.sin(Math.toRadians(0 + alpha))) + (self.y * Math.sin(Math.toRadians(90 + alpha)))
+def rotatePoint2D(pointX, pointY, centerX, centerY, alpha):
 
-        self.x = newX
-        self.y = newY
+    pointX = pointX - centerX
+    pointY = pointY - centerY
+
+    newX = (pointX * cos(radians(0 + alpha))) + (pointY * cos(radians(90 + alpha)))
+    newY = (pointX * sin(radians(0 + alpha))) + (pointY * sin(radians(90 + alpha)))
+
+    newX = newX + centerX
+    newY = newY + centerY
+
+    return newX, newY
