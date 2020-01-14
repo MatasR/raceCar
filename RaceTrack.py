@@ -1,7 +1,6 @@
 import pygame
 import config
 
-
 class RaceTrack:
     def draw(self, screen):
         # Outter ring
