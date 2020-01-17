@@ -2,7 +2,7 @@ import pygame
 import config
 
 import RaceCarPoly
-import RaceTrack
+import RaceTrack2
 import Timer
 
 # Initialize game engine library
@@ -16,7 +16,7 @@ clock = pygame.time.Clock()
 # Create the car
 car = RaceCarPoly.RaceCar()
 # Create the track
-track = RaceTrack.RaceTrack()
+track = RaceTrack2.RaceTrack()
 # Create the timer
 timer = Timer.Timer()
 
@@ -39,7 +39,7 @@ while run:
     screen.fill((0, 255, 0))
 
     # Draw the track
-    innerRing, outterRing, finishLine, midLine = track.draw(screen)
+    track.draw(screen)
 
     # Draw the car
     carBody = car.do(screen)
@@ -52,7 +52,7 @@ while run:
     # 1 Start the game
 
     # If car waiting - check for finishline collision to start the game
-    if carState == 0:
+    '''if carState == 0:
         if carBody.colliderect(finishLine):
             carState += 1  # Car state running
             print('Lets go!')
@@ -63,7 +63,7 @@ while run:
     if carState == 2:
         if carBody.colliderect(finishLine):
             carState += 1
-            print('You finished!')
+            print('You finished!')'''
     # Off Track collision
 
     # print(carBody.colliderect(outterRing))
