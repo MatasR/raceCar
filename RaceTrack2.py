@@ -16,8 +16,7 @@ class RaceTrack:
             (10, 100),
             (10, 100),
             (10, 200),
-            (10, 200),
-            (config.screenWidth / 2, config.screenHeight)
+            (10, 200)
         ]
 
         # Track inner points
@@ -30,8 +29,7 @@ class RaceTrack:
             (config.screenWidth / 2 - 250, 110),
             (110, 110),
             (110, 175),
-            (110, 175),
-            (config.screenWidth / 2, config.screenHeight - 100)
+            (110, 175)
         ]
 
     def draw(self, screen):
@@ -45,22 +43,16 @@ class RaceTrack:
         # OUTER HEART (lines)
         i = 0
         for x in self.outerPoints:
-            pygame.draw.line(screen, config.C_YELLOW, self.outerPoints[i], self.outerPoints[i+1], 3)
+            pygame.draw.line(screen, config.C_YELLOW, self.outerPoints[i], self.outerPoints[(i + 1) % len(self.outerPoints)], 3)
             i += 1
-            # If last point - break the loop.
-            if i+1 == len(self.outerPoints):
-                break
 
         # INNER HEART (lines)
         i = 0
         for x in self.innerPoints:
-            pygame.draw.line(screen, config.C_YELLOW, self.innerPoints[i], self.innerPoints[i + 1], 3)
+            pygame.draw.line(screen, config.C_YELLOW, self.innerPoints[i], self.innerPoints[(i + 1) % len(self.innerPoints)], 3)
             i += 1
-            # If last point - break the loop.
-            if i + 1 == len(self.innerPoints):
-                break
 
-        return self.outerPoints
+        return (self.outerPoints, self.innerPoints)
 
     def drawLines(self, screen):
 

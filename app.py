@@ -4,6 +4,7 @@ import config
 import RaceCarPoly
 import RaceTrack2
 import Timer
+import functions
 
 # Initialize game engine library
 pygame.init()
@@ -44,10 +45,10 @@ while run:
     # Reset the screen
     screen.fill((0, 255, 0))
 
-    # Draw the track
+    # Draw the track and return track borders for off track collision check
     trackBorders = track.draw(screen)
 
-    # Draw collide lines
+    # Draw track lines
     lines = track.drawLines(screen)# 0 - quarter, 1 - mid, 2 - 3quarters, 3 - start/finish
 
     # Draw the car
@@ -56,8 +57,7 @@ while run:
     # Update timer and draw it
     time = timer.update(carState, screen)
 
-    # Check for collisions
-    # If car waiting - check for finishline collision to start the game
+    # Check for line collisions
     if carState == 0: # Car state - ready
         if car.checkForCollision(lines[3]):
             carState += 1  # Car state - just launched
@@ -79,9 +79,29 @@ while run:
             carState += 1  # Car state - finished
             print('You finished!')
             print('Your time is:', time, ' Nice job!')
+            print('Best time is:', functions.highscore(time))
 
     # Off Track collision
-    if carState == 5:
+    if carState > 0:
+        # Outer track
+        i = 0
+        for point in trackBorders[0]:
+            line = (trackBorders[0][i], trackBorders[0][(i + 1) % len(trackBorders[0])])
+            if car.checkForCollision(line):
+                carState = 6 # Car state - crashed
+                print('You crashed! :/')
+            i += 1
+        # Inner track
+        i = 0
+        for point in trackBorders[1]:
+            line = (trackBorders[1][i], trackBorders[1][(i + 1) % len(trackBorders[1])])
+            if car.checkForCollision(line):
+                carState = 6  # Car state - crashed
+                print('You crashed! :/')
+            i += 1
+
+    # End game if car state - finished
+    if carState > 4:
         run = False
 
     # Update the screen

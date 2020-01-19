@@ -60,3 +60,16 @@ def rotatePoint2D(pointX, pointY, centerX, centerY, alpha):
     newY = newY + centerY
 
     return (newX, newY)
+
+def highscore(time):
+    file = open('highscore.txt', 'r')
+    highscore = file.readline()
+    file.close()
+
+    if time < float(highscore):
+        file = open('highscore.txt', 'w')
+        file.write(str(time))
+        file.close()
+        return time
+
+    return highscore
