@@ -15,6 +15,8 @@ class Timer:
         screen.blit(text, textRect)
 
     def update(self, carState, screen):
-        if carState > 0 and carState < 3:
+        if carState > 0 and carState < 5:
             self.time += 0.5
         self.draw(screen)
+
+        return self.time

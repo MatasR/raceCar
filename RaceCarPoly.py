@@ -6,11 +6,11 @@ from math import *
 class RaceCar:
     def __init__(self):
         # Main car configs initialized on first call
-        self.width = 30
-        self.length = 50
-        self.x = config.screenWidth / 2 - self.length / 2 - 3  # Starting position
+        self.width = 30 # 30
+        self.length = 50 # 50
+        self.x = config.screenWidth / 2 - self.length / 2 - 1  # Starting position
         self.y = config.screenHeight - 35 - self.width / 2  # Starting position
-        self.color = (255, 0, 0)
+        self.color = config.C_PURPLE
 
         self.currentSpeed = 0
         self.maxSpeed = 7
@@ -18,6 +18,26 @@ class RaceCar:
 
         self.carDirection = 0
         self.turnSpeed = 5
+
+        # Calculate each point for car body corners on init for nice math in future
+        self.bodyPoints = [
+            (# p1
+                self.x-self.length/2,# x1
+                self.y-self.width/2# y1
+            ),
+            (# p2
+                self.x+self.length/2,# x2
+                self.y-self.width/2# y2
+            ),
+            (# p3
+                self.x+self.length/2,# x3
+                self.y+self.width/2# y3
+            ),
+            (# p4
+                self.x-self.length/2,# x4
+                self.y+self.width/2# y4
+            )
+        ]
 
     def keys(self):
         # Change the parameters of the car according to pushed key
@@ -72,42 +92,54 @@ class RaceCar:
 
     def draw(self, screen):
 
-        # Car body points until rotation
-        x1 = self.x-self.length/2
-        y1 = self.y-self.width/2
-
-        x2 = self.x+self.length/2
-        y2 = self.y-self.width/2
-
-        x3 = self.x+self.length/2
-        y3 = self.y+self.width/2
-
-        x4 = self.x-self.length/2
-        y4 = self.y+self.width/2
+        # Car body points NOT rotated (we need it for the rotation function)
+        notRotatedBodyPoints = [
+            (# p1
+                self.x-self.length/2,# x1
+                self.y-self.width/2# y1
+            ),
+            (# p2
+                self.x+self.length/2,# x2
+                self.y-self.width/2# y2
+            ),
+            (# p3
+                self.x+self.length/2,# x3
+                self.y+self.width/2# y3
+            ),
+            (# p4
+                self.x-self.length/2,# x4
+                self.y+self.width/2# y4
+            )
+        ]
 
         # we should use relative x, y coords instead of global
         # because we will rotate around car body center, not around screen bottom left corner
+        # this is done in functions file
 
         # Calculate new car body points position with angle to rotate after
-        x1, y1 = functions.rotatePoint2D(x1, y1, self.x, self.y, self.carDirection)
-        x2, y2 = functions.rotatePoint2D(x2, y2, self.x, self.y, self.carDirection)
-        x3, y3 = functions.rotatePoint2D(x3, y3, self.x, self.y, self.carDirection)
-        x4, y4 = functions.rotatePoint2D(x4, y4, self.x, self.y, self.carDirection)
+        # And get rotated body points
+        i = 0
+        for point in notRotatedBodyPoints:
+            self.bodyPoints[i] = functions.rotatePoint2D(point[0], point[1], self.x, self.y, self.carDirection)
+            i += 1
 
         # Draw rotated car body
-        carBody = pygame.draw.polygon(screen, self.color, [
-            (x1,y1),
-            (x2,y2),
-            (x3,y3),
-            (x4,y4)
-        ])
-
-        return carBody
+        pygame.draw.polygon(screen, self.color, self.bodyPoints)
 
     def do(self, screen):
         # Container for all necessary functions
         self.keys()
         self.move()
-        carBody = self.draw(screen)
+        self.draw(screen)
 
-        return carBody
+    def checkForCollision(self, line):
+
+        # take all 4 car body lines, and check with given line
+        i = 0
+        for point in self.bodyPoints:
+            bodyLine = (self.bodyPoints[i], self.bodyPoints[(i+1) % len(self.bodyPoints)])
+            if functions.collisionDetection(bodyLine, line):
+                return True
+            i += 1
+
+        return False
