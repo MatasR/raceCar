@@ -54,6 +54,9 @@ while run:
     # Draw the car
     car.do(screen)
 
+    # Draw car radars
+    car.drawRadars(screen, trackBorders)
+
     # Update timer and draw it
     time = timer.update(carState, screen)
 

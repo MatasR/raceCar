@@ -14,9 +14,7 @@ class RaceTrack:
             (config.screenWidth / 2 - 200, 10),
             (100, 10),
             (10, 100),
-            (10, 100),
             (10, 200),
-            (10, 200)
         ]
 
         # Track inner points
@@ -29,7 +27,6 @@ class RaceTrack:
             (config.screenWidth / 2 - 250, 110),
             (110, 110),
             (110, 175),
-            (110, 175)
         ]
 
     def draw(self, screen):
@@ -63,8 +60,8 @@ class RaceTrack:
         pygame.draw.line(screen, config.C_BLUE, self.outerPoints[5], self.innerPoints[4], 1)
         midLine = (self.outerPoints[5], self.innerPoints[4])
         # Three Quarters line
-        pygame.draw.line(screen, config.C_BLUE, self.outerPoints[10], self.innerPoints[7], 1)
-        threeQuartersLine = (self.outerPoints[10], self.innerPoints[7])
+        pygame.draw.line(screen, config.C_BLUE, self.outerPoints[9], self.innerPoints[7], 1)
+        threeQuartersLine = (self.outerPoints[9], self.innerPoints[7])
         # Start/finish line
         pygame.draw.line(screen, config.C_YELLOW, self.outerPoints[0], self.innerPoints[0], 1)
         finishLine = (self.outerPoints[0], self.innerPoints[0])

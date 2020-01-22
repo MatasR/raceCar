@@ -7,6 +7,12 @@ def collisionDetection(line1, line2): # segmentIntersect
     p2 = line2[0]
     p3 = line2[1]
 
+    # Fix for the EPSILON bug
+    p0 = (round(p0[0], 9), round(p0[1], 9))
+    p1 = (round(p1[0], 9), round(p1[1], 9))
+    p2 = (round(p2[0], 9), round(p2[1], 9))
+    p3 = (round(p3[0], 9), round(p3[1], 9))
+
     A1 = p1[1] - p0[1]
     B1 = p0[0] - p1[0]
     C1 = A1 * p0[0] + B1 * p0[1]
@@ -22,22 +28,22 @@ def collisionDetection(line1, line2): # segmentIntersect
     intersectX = (B2 * C1 - B1 * C2) / denominator
     intersectY = (A1 * C2 - A2 * C1) / denominator
 
-    if ((p1[0] - p0[0]) != 0):
+    if (p1[0] != p0[0]):
         rx0 = (intersectX - p0[0]) / (p1[0] - p0[0])
     else:
         rx0 = -1
 
-    if((p1[1] - p0[1]) != 0):
+    if(p1[1] != p0[1]):
         ry0 = (intersectY - p0[1]) / (p1[1] - p0[1])
     else:
         ry0 = -1
 
-    if((p3[0] - p2[0]) != 0):
+    if(p3[0] != p2[0]):
         rx1 = (intersectX - p2[0]) / (p3[0] - p2[0])
     else:
         rx1 = -1
 
-    if((p3[1] - p2[1]) != 0):
+    if(p3[1] != p2[1]):
         ry1 = (intersectY - p2[1]) / (p3[1] - p2[1])
     else:
         ry1 = -1
@@ -73,3 +79,6 @@ def highscore(time):
         return time
 
     return highscore
+
+def distance(p0, p1):
+    return sqrt((p0[0]-p1[0])**2+(p0[1]-p1[1])**2)
