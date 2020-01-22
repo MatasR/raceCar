@@ -15,6 +15,7 @@ class RaceCar:
         self.currentSpeed = 0
         self.maxSpeed = 7
         self.accSpeed = 0.5
+        self.deccSpeed = self.accSpeed * 2
 
         self.carDirection = 0
         self.turnSpeed = 5
@@ -48,8 +49,11 @@ class RaceCar:
             if self.currentSpeed < self.maxSpeed:
                 self.currentSpeed += self.accSpeed
         # Deccelerate
-        if key[pygame.K_DOWN]:
-            self.currentSpeed -= self.accSpeed
+        elif key[pygame.K_DOWN]:
+            self.currentSpeed -= self.deccSpeed
+        # If no acc and no decc - engine idle brake
+        else:
+            self.currentSpeed -= self.accSpeed / 2
         # Turn
         if key[pygame.K_LEFT]:
             self.rotate("LEFT")
