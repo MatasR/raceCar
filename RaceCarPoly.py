@@ -6,8 +6,8 @@ from math import *
 class RaceCar:
     def __init__(self):
         # Main car configs initialized on first call
-        self.width = 10 # 30
-        self.length = 20 # 50
+        self.width = 20 # 30
+        self.length = 40 # 50
         self.x = config.screenWidth / 2 - self.length / 2 - 1  # Starting position
         self.y = config.screenHeight - 35 - self.width / 2  # Starting position
         self.color = config.C_PURPLE
@@ -16,6 +16,7 @@ class RaceCar:
         self.maxSpeed = 7
         self.accSpeed = 0.5
         self.deccSpeed = self.accSpeed * 2
+        self.idleSpeed = self.deccSpeed / 4
 
         self.carDirection = 0
         self.turnSpeed = 5
@@ -53,7 +54,7 @@ class RaceCar:
             self.currentSpeed -= self.deccSpeed
         # If no acc and no decc - engine idle brake
         else:
-            self.currentSpeed -= self.accSpeed / 2
+            self.currentSpeed -= self.idleSpeed
         # Turn
         if key[pygame.K_LEFT]:
             self.rotate("LEFT")
@@ -214,8 +215,8 @@ class RaceCar:
             i += 1
 
         # Custom additional rotations for some radars
-        radars[1][1] = functions.rotatePoint2D(radars[1][1][0], radars[1][1][1], radars[1][0][0], radars[1][0][1], -5)
-        radars[2][1] = functions.rotatePoint2D(radars[2][1][0], radars[2][1][1], radars[2][0][0], radars[2][0][1], 5)
+        radars[1][1] = functions.rotatePoint2D(radars[1][1][0], radars[1][1][1], radars[1][0][0], radars[1][0][1], -10)
+        radars[2][1] = functions.rotatePoint2D(radars[2][1][0], radars[2][1][1], radars[2][0][0], radars[2][0][1], 10)
 
         radars[3][1] = functions.rotatePoint2D(radars[3][1][0], radars[3][1][1], radars[3][0][0], radars[3][0][1], -30)
         radars[4][1] = functions.rotatePoint2D(radars[4][1][0], radars[4][1][1], radars[4][0][0], radars[4][0][1], 30)
